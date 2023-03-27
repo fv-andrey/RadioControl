@@ -6,6 +6,41 @@ import org.junit.jupiter.api.Test;
 public class RadioTest {
 
     @Test
+    void maxStationChooseTest() {
+        Radio control = new Radio(1);
+
+        Assertions.assertEquals(1, control.getMaxStation());
+    }
+
+    @Test
+    void maxStationIfChooseBelowMinNumberTest() {
+        Radio control = new Radio(-1);
+
+        Assertions.assertEquals(0, control.getMaxStation());
+    }
+
+    @Test
+    void maxStationDefaultTest() {
+        Radio control = new Radio();
+
+        Assertions.assertEquals(10, control.getMaxStation());
+    }
+
+    @Test
+    void maxNumberWithChooseMaxStationTest() {
+        Radio control = new Radio(25);
+
+        Assertions.assertEquals(24, control.getMaxNumber());
+    }
+
+    @Test
+    void maxNumberByDefaultMaxStationTest() {
+        Radio control = new Radio();
+
+        Assertions.assertEquals(9, control.getMaxNumber());
+    }
+
+    @Test
     void nextNumberTest() {
         Radio control = new Radio();
         control.setNumber(8);
@@ -18,9 +53,21 @@ public class RadioTest {
     }
 
     @Test
-    void nextNumberAfterMaxTest() {
+    void nextNumberAfterMaxByDefaultMaxStationTest() {
         Radio control = new Radio();
         control.setNumber(9);
+        control.nextNumber();
+
+        int expected = 0;
+        int actual = control.getNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void nextNumberAfterMaxWithChooseMaxStationTest() {
+        Radio control = new Radio(25);
+        control.setNumber(24);
         control.nextNumber();
 
         int expected = 0;
@@ -48,6 +95,30 @@ public class RadioTest {
         control.prevNumber();
 
         int expected = 9;
+        int actual = control.getNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void prevNumberAfterMinWithChooseMaxStationTest() {
+        Radio control = new Radio(25);
+        control.setNumber(0);
+        control.prevNumber();
+
+        int expected = 24;
+        int actual = control.getNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void prevNumberAfterMinTest11() {
+        Radio control = new Radio(25);
+        control.setNumber(0);
+        control.prevNumber();
+
+        int expected = 24;
         int actual = control.getNumber();
 
         Assertions.assertEquals(expected, actual);
@@ -98,7 +169,7 @@ public class RadioTest {
     }
 
     @Test
-    void setMaxNumberTest() {
+    void setMaxNumberByDefaultMaxStationTest() {
         Radio control = new Radio();
         control.setNumber(9);
 
@@ -109,9 +180,31 @@ public class RadioTest {
     }
 
     @Test
-    void setNumberAboveMaxTest() {
+    void setMaxNumberWithChooseMaxStationTest() {
+        Radio control = new Radio(25);
+        control.setNumber(24);
+
+        int expected = 24;
+        int actual = control.getNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void setNumberAboveMaxByDefaultMaxStationTest() {
         Radio control = new Radio();
         control.setNumber(10);
+
+        int expected = 0;
+        int actual = control.getNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void setNumberAboveMaxWithChooseMaxStationTest() {
+        Radio control = new Radio(25);
+        control.setNumber(25);
 
         int expected = 0;
         int actual = control.getNumber();
