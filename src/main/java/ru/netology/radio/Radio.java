@@ -1,56 +1,70 @@
 package ru.netology.radio;
 
-public class Radio {
-    private int number;
-    private int volume;
+import lombok.Getter;
+import lombok.Setter;
 
-    int getNumber() {
-        return number;
+@Getter
+@Setter
+
+public class Radio {
+    private int maxStation;
+    private int maxNumber;
+    private int minNumber = 0;
+    private int number = minNumber;
+    private int maxVolume = 100;
+    private int minVolume = 0;
+    private int volume = minVolume;
+
+    Radio(int maxStation) {
+        if (maxStation < minNumber) {
+            return;
+        }
+        this.maxStation = maxStation;
+        maxNumber = maxStation - 1;
+    }
+
+    Radio() {
+        maxStation = 10;
+        maxNumber = maxStation - 1;
     }
 
     void nextNumber() {
-        if (number + 1 > 9) {
-            number = 0;
+        if (number + 1 > maxNumber) {
+            number = minNumber;
         } else {
             number = number + 1;
         }
     }
 
     void prevNumber() {
-        if (number - 1 < 0) {
-            number = 9;
+        if (number - 1 < minNumber) {
+            number = maxNumber;
         } else {
             number = number - 1;
         }
     }
 
     void setNumber(int chooseNumber) {
-        if (chooseNumber < 0) {
+        if (chooseNumber < minNumber) {
             return;
         }
-        if (chooseNumber > 9) {
+        if (chooseNumber > maxNumber) {
             return;
         }
         number = chooseNumber;
     }
 
-    int getVolume() {
-        return volume;
-    }
-
-    void setVolume(int newVolume) {
-        volume = newVolume;
-    }
-
     void upVolume() {
-        if (volume < 100) {
+        if (volume < maxVolume) {
             volume = volume + 1;
         }
     }
 
     void downVolume() {
-        if (volume > 0) {
+        if (volume > minVolume) {
             volume = volume - 1;
         }
     }
 }
+
+
